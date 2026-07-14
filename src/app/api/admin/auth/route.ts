@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setSession, getSessionPasswordHash, verifyPassword } from "@/lib/auth";
+import { setSession } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   const { password } = await req.json();
@@ -10,14 +10,11 @@ export async function POST(req: NextRequest) {
 
   const adminPassword = process.env.ADMIN_PASSWORD || "admin";
 
-  if (!verifyPassword(password, getSessionPasswordHash())) {
-    // Check against raw env var
-    if (password !== adminPassword) {
-      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
-    }
+  if (password !== adminPassword) {
+    return NextResponse.json({ error: "Invalid password" }, { status: 401 });
   }
 
-  await setSession(getSessionPasswordHash());
+  await setSession();
   return NextResponse.json({ ok: true });
 }
 
