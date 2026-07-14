@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { getSettings } from "@/lib/data";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -67,21 +68,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSettings();
+
   return (
     <html
       lang="en"
       className={`${montserrat.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
+        <Navbar whatsapp={settings.whatsapp} />
         <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <Footer address={settings.address} instagram={settings.instagram} />
+        <WhatsAppButton whatsapp={settings.whatsapp} />
       </body>
     </html>
   );

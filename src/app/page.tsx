@@ -3,7 +3,7 @@ import Link from "next/link";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import HomeGallery from "@/components/HomeGallery";
 import ServiceCards3D from "@/components/ServiceCards3D";
-import { getGalleryFeatured, getServices, getReviews } from "@/lib/data";
+import { getGalleryFeatured, getServices, getReviews, getSettings } from "@/lib/data";
 
 const process = [
   { step: "01", title: "Connect", desc: "Share your vision with us over a call. We discuss dates, venues, and the moments that matter most to you." },
@@ -16,6 +16,7 @@ export default async function Home() {
   const gallery = await getGalleryFeatured();
   const services = await getServices();
   const reviews = await getReviews();
+  const settings = await getSettings();
 
   return (
     <>
@@ -72,7 +73,7 @@ export default async function Home() {
       {/* Hero */}
       <section className="relative pt-[72px] min-h-screen overflow-hidden">
         <Image
-          src="/homepage.png"
+          src={settings.heroDesktop || "/homepage.png"}
           alt="Wedding celebration"
           fill
           priority
@@ -80,7 +81,7 @@ export default async function Home() {
           sizes="100vw"
         />
         <Image
-          src="/homepagemobile.png"
+          src={settings.heroMobile || "/homepagemobile.png"}
           alt="Wedding celebration"
           fill
           priority
@@ -151,7 +152,7 @@ export default async function Home() {
                   Discover Our Story
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </Link>
-                <a href="https://maps.app.goo.gl/tpCAkGsJYLv8acEN8" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-gold hover:text-primary transition-colors">
+                <a href={settings.mapsUrl || "https://maps.app.goo.gl/tpCAkGsJYLv8acEN8"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-gold hover:text-primary transition-colors">
                   Find on Maps
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </a>
@@ -258,7 +259,7 @@ export default async function Home() {
             Our calendar fills up quickly, especially during the wedding season. Get in touch today to check availability for your special date.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <a href="https://wa.me/918978936785" target="_blank" rel="noopener noreferrer" className="btn-gold-outline !text-gold !border-gold hover:!bg-gold hover:!text-primary">
+            <a href={`https://wa.me/${settings.whatsapp || "918978936785"}`} target="_blank" rel="noopener noreferrer" className="btn-gold-outline !text-gold !border-gold hover:!bg-gold hover:!text-primary">
               Inquire via WhatsApp
             </a>
             <Link href="/gallery" className="btn-outline !text-surface !border-surface/30 hover:!border-surface">

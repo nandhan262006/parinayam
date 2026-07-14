@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Footer() {
+export default function Footer({ address, instagram }: { address?: string; instagram?: string }) {
+  const addr = address || "Shop no 208, Vijaya Complex, Ongole, AP";
+  const ig = instagram || "https://www.instagram.com/parinayamphoto/";
   return (
     <footer className="bg-primary text-surface/60">
       <div className="container-max py-16">
@@ -18,10 +20,10 @@ export default function Footer() {
               Capturing the soul of Indian celebrations with timeless elegance and modern sophistication.
             </p>
             <a href="https://maps.app.goo.gl/tpCAkGsJYLv8acEN8" target="_blank" rel="noopener noreferrer" className="text-xs text-surface/50 hover:text-gold transition-colors mt-3 block">
-              Shop no 208, Vijaya Complex, Ongole, AP
+              {addr}
             </a>
             <div className="flex gap-4 mt-5 text-surface/70">
-              <a href="https://www.instagram.com/parinayamphoto/" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">Instagram</a>
+              <a href={ig} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">Instagram</a>
             </div>
           </div>
 

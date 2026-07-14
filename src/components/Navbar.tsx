@@ -11,9 +11,10 @@ const links = [
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: "/admin", label: "Admin" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ whatsapp = "918978936785" }: { whatsapp?: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -46,12 +47,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <a href="https://wa.me/918978936785" target="_blank" rel="noopener noreferrer" className="btn-primary text-xs !py-2.5 !px-5">
+          <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn-primary text-xs !py-2.5 !px-5">
             Book Now
           </a>
-          <Link href="/admin" className="text-xs text-muted hover:text-gold transition-colors ml-2">
-            Admin
-          </Link>
         </div>
 
         <button
@@ -84,7 +82,7 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="px-5 py-3.5">
-            <a href="https://wa.me/918978936785" target="_blank" rel="noopener noreferrer" className="btn-primary text-xs !py-2.5 !px-5 inline-block">
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn-primary text-xs !py-2.5 !px-5 inline-block">
               Book Now
             </a>
           </div>

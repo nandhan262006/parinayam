@@ -1,6 +1,6 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import GalleryClient from "@/components/GalleryClient";
+import { getGalleryAll } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Gallery — Timeless Wedding Photography by Parinayam",
@@ -8,30 +8,21 @@ export const metadata: Metadata = {
     "Explore our gallery of timeless Telugu weddings, candid portraits, bridal moments & celebrations captured by Ongole's finest photographer, Hareesh Mulluri.",
 };
 
-const images = [
-  { src: "/gallery1.png", alt: "Gallery 1", category: "Weddings", width: 1122, height: 1402 },
-  { src: "/gallery2.png", alt: "Gallery 2", category: "Weddings", width: 1402, height: 1122 },
-  { src: "/gallery3.png", alt: "Gallery 3", category: "Portraits", width: 1136, height: 1385 },
-  { src: "/gallery4.png", alt: "Gallery 4", category: "Events", width: 1402, height: 1122 },
-  { src: "/gallery5.png", alt: "Gallery 5", category: "Details", width: 1536, height: 1024 },
-  { src: "/gallery6.png", alt: "Gallery 6", category: "Weddings", width: 1536, height: 1024 },
-  { src: "/gallery7.png", alt: "Gallery 7", category: "Portraits", width: 1023, height: 1537 },
-  { src: "/gallery8.png", alt: "Gallery 8", category: "Details", width: 891, height: 885 },
-  { src: "/gallery9.png", alt: "Gallery 9", category: "Weddings", width: 1023, height: 1537 },
-];
+export default async function Gallery() {
+  const items = await getGalleryAll();
+  const images = items.map((item) => ({
+    src: "src" in item ? (item as { src: string }).src : (item as { imageUrl: string }).imageUrl,
+    alt: item.title,
+    category: item.category,
+    width: "width" in item ? (item as { width: number }).width : 1122,
+    height: "height" in item ? (item as { height: number }).height : 1402,
+  }));
 
-export default function Gallery() {
   return (
     <>
       <section className="relative pt-[72px] overflow-hidden">
         <div className="absolute inset-0">
-          <Image
-            src="/gallery5.png"
-            alt=""
-            fill
-            className="object-cover opacity-30"
-            sizes="100vw"
-          />
+          <img src="/gallery5.png" alt="" className="w-full h-full object-cover opacity-30" />
         </div>
         <div className="container-max section-gap !pb-0 relative">
           <div className="max-w-3xl">
