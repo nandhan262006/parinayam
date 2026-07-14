@@ -155,10 +155,12 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-4 mt-8">
                 <Link href="/about" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-primary hover:text-gold transition-colors">
-                  Discover Our Story arrow_forward
+                  Discover Our Story
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </Link>
                 <a href="https://maps.app.goo.gl/tpCAkGsJYLv8acEN8" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-gold hover:text-primary transition-colors">
-                  Find on Maps arrow_forward
+                  Find on Maps
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </a>
             </div>
           </div>
