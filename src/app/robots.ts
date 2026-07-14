@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://parinayam-rose.vercel.app/sitemap.xml",
+    sitemap: "https://parinayam-git-main-nandhan262006s-projects.vercel.app/sitemap.xml",
   };
 }
