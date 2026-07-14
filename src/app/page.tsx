@@ -33,9 +33,9 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             name: "Parinayam Photography",
-            image: "https://parinayam-git-main-nandhan262006s-projects.vercel.app/og-image.jpg",
-            "@id": "https://parinayam-git-main-nandhan262006s-projects.vercel.app",
-            url: "https://parinayam-git-main-nandhan262006s-projects.vercel.app",
+            image: "https://parinayam-rose.vercel.app/og-image.jpg",
+            "@id": "https://parinayam-rose.vercel.app",
+            url: "https://parinayam-rose.vercel.app",
             telephone: "+918978936785",
             description:
               "Ongole's finest wedding photographer. 4.9-star rated, 10+ years capturing timeless Telugu celebrations.",

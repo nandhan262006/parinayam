@@ -1,4 +1,5 @@
-import { requireAuth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import Sidebar from "./Sidebar";
 
 export const dynamic = "force-dynamic";
@@ -8,11 +9,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  try {
-    await requireAuth();
-  } catch {
-    return null;
-  }
+  const session = await getSession();
+  if (!session) redirect("/admin/login");
 
   return (
     <div className="flex min-h-screen">
