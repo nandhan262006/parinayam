@@ -153,9 +153,13 @@ export default function Home() {
                   Based in Ongole, we specialize in luxury wedding documentation that blends traditional reverence with contemporary editorial finesse. Our approach is unobtrusive yet intentional — ensuring that every fleeting glance and heartfelt laugh is preserved forever.
                 </p>
               </div>
-              <Link href="/about" className="inline-flex items-center gap-2 mt-8 text-sm uppercase tracking-[0.05em] font-semibold text-primary hover:text-gold transition-colors">
-                Discover Our Story arrow_forward
-              </Link>
+              <div className="flex items-center gap-4 mt-8">
+                <Link href="/about" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-primary hover:text-gold transition-colors">
+                  Discover Our Story arrow_forward
+                </Link>
+                <a href="https://maps.app.goo.gl/tpCAkGsJYLv8acEN8" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-gold hover:text-primary transition-colors">
+                  Find on Maps arrow_forward
+                </a>
             </div>
           </div>
         </div>
