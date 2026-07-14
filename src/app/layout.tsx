@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://parinayam.com"),
+  metadataBase: new URL("https://parinayam-rose.vercel.app"),
   title: {
     default: "Parinayam Photography — Ongole's Finest Wedding Photographer | Timeless Celebrations",
     template: "%s | Parinayam Photography",

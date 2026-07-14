@@ -3,37 +3,37 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://parinayam.com",
+      url: "https://parinayam-rose.vercel.app",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: "https://parinayam.com/portfolio",
+      url: "https://parinayam-rose.vercel.app/portfolio",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: "https://parinayam.com/gallery",
+      url: "https://parinayam-rose.vercel.app/gallery",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: "https://parinayam.com/services",
+      url: "https://parinayam-rose.vercel.app/services",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://parinayam.com/about",
+      url: "https://parinayam-rose.vercel.app/about",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: "https://parinayam.com/contact",
+      url: "https://parinayam-rose.vercel.app/contact",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
