@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import HomeGallery from "@/components/HomeGallery";
+import ServiceCards3D from "@/components/ServiceCards3D";
 
 const gallery = [
   { src: "/gallery1.png", alt: "Gallery 1", category: "Wedding Rituals", title: "Ananya & Rohit", width: 1122, height: 1402 },
@@ -180,42 +181,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Stack */}
+      {/* Services */}
       <section className="section-gap bg-surface-dim">
         <div className="container-max">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.15em] font-semibold text-gold mb-2">What We Offer</p>
             <h2 className="font-[family-name:var(--font-serif)] text-[40px] leading-[48px] font-semibold text-primary">
-              Every moment, beautifully captured.
+              Our Services
             </h2>
           </div>
-          <div className="max-w-2xl mx-auto space-y-4">
-            {[
-              { title: "Wedding Photography", desc: "Full-day coverage of rituals, emotions & grand celebrations with dual photographers.", icon: "camera" },
-              { title: "Pre-Wedding Shoots", desc: "Cinematic couple portraits at handpicked locations that tell your love story.", icon: "photo_camera" },
-              { title: "Cinematic Films", desc: "Feature-length wedding films with drone cinematography & professional audio.", icon: "videocam" },
-              { title: "Candid Moments", desc: "Unscripted, natural frames that capture the genuine laughter, tears & joy.", icon: "filter_vintage" },
-              { title: "Aerial Coverage", desc: "Breathtaking drone perspectives of your venue, procession & grand celebrations.", icon: "flight" },
-              { title: "Heirloom Albums", desc: "Handcrafted, luxury wedding albums designed to be passed down generations.", icon: "book" },
-            ].map((s, i) => (
-              <div
-                key={s.title}
-                className="bg-surface border border-border/30 rounded p-6 flex items-start gap-5 hover:border-gold/40 transition-all hover:-translate-y-0.5 hover:shadow-sm"
-                style={{ zIndex: 10 - i }}
-              >
-                <div className="w-12 h-12 shrink-0 rounded-full bg-gold/10 flex items-center justify-center">
-                  <span className="text-gold text-xl">{s.icon}</span>
-                </div>
-                <div>
-                  <h3 className="font-[family-name:var(--font-serif)] text-lg text-primary mb-1">{s.title}</h3>
-                  <p className="text-sm text-muted leading-relaxed">{s.desc}</p>
-                </div>
-                <a href="https://wa.me/918978936785" target="_blank" rel="noopener noreferrer" className="ml-auto shrink-0 self-center text-xs uppercase tracking-[0.1em] font-semibold text-gold hover:text-primary transition-colors hidden sm:block">
-                  Inquire
-                </a>
-              </div>
-            ))}
-          </div>
+          <ServiceCards3D
+            cards={[
+              { title: "Bridal Photography", description: "Elegant bridal portraits that capture every detail of your special day, from the intricate jewellery to the joyous tears.", img: "/gallery1.png" },
+              { title: "Engagement Photography", description: "Beautiful engagement shoots that tell your love story against stunning backdrops.", img: "/gallery3.png" },
+              { title: "Candid Photography", description: "Natural, unposed moments that reflect genuine emotions — the laughter, the tears, the pure joy.", img: "/gallery2.png" },
+              { title: "Wedding Cinematography", description: "Cinematic wedding films that bring your most cherished memories to life with stunning visuals.", img: "/gallery5.png" },
+              { title: "Pre-Wedding Shoot", description: "Creative pre-wedding sessions at handpicked locations that capture your unique bond.", img: "/gallery7.png" },
+              { title: "Event Photography", description: "Professional coverage for engagements, receptions, and all your special celebrations.", img: "/gallery4.png" },
+            ]}
+          />
         </div>
       </section>
 
