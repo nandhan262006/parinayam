@@ -1,174 +1,56 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 interface Submission {
-  id: string;
-  name: string;
-  email: string | null;
-  phone: string | null;
-  message: string | null;
-  eventType: string | null;
-  eventDate: string | null;
-  createdAt: string;
+  id: string; name: string; email?: string; phone?: string; message?: string; eventType?: string; eventDate?: string; createdAt: string;
 }
 
 export default function SubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [clearing, setClearing] = useState(false);
-
-  const fetchSubmissions = useCallback(async () => {
-    try {
-      const res = await fetch("/api/admin/submissions");
-      const data = await res.json();
-      setSubmissions(data);
-    } catch {
-      setError("Failed to load submissions");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
   useEffect(() => {
-    fetchSubmissions();
-  }, [fetchSubmissions]);
+    fetch("/api/admin/submissions", { credentials: "include" })
+      .then((res) => res.json())
+      .then(setSubmissions)
+      .finally(() => setLoading(false));
+  }, []);
 
-  const handleClearAll = async () => {
-    if (!confirm("Delete all submissions? This cannot be undone.")) return;
-    setClearing(true);
-    try {
-      await fetch("/api/admin/submissions", { method: "DELETE" });
-      setSubmissions([]);
-    } catch {
-      setError("Failed to clear submissions");
-    } finally {
-      setClearing(false);
-    }
+  const clearAll = async () => {
+    if (!confirm("Delete ALL submissions?")) return;
+    await fetch("/api/admin/submissions", { method: "DELETE", credentials: "include" });
+    setSubmissions([]);
   };
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-gray-500">Loading...</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="py-20 text-center text-gray-500">Loading...</div>;
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Submissions</h1>
-        {submissions.length > 0 && (
-          <button
-            onClick={handleClearAll}
-            disabled={clearing}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600 transition-colors disabled:opacity-50"
-          >
-            {clearing ? "Clearing..." : "Clear All"}
-          </button>
-        )}
+        <h1 className="text-2xl font-bold text-gray-900">Submissions ({submissions.length})</h1>
+        {submissions.length > 0 && <button onClick={clearAll} className="text-red-500 text-sm hover:underline">Clear All</button>}
       </div>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-4">
-          {error}
-        </div>
-      )}
+      {submissions.length === 0 && <p className="text-gray-500 text-center py-10">No submissions yet.</p>}
 
-      {submissions.length === 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 p-10 text-center">
-          <p className="text-gray-500">No submissions yet.</p>
-        </div>
-      )}
-
-      {submissions.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-200 bg-gray-50">
-                  <th className="text-left px-4 py-3 text-xs text-gray-500 uppercase tracking-wider font-medium">
-                    Name
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs text-gray-500 uppercase tracking-wider font-medium">
-                    Contact
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs text-gray-500 uppercase tracking-wider font-medium">
-                    Event
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs text-gray-500 uppercase tracking-wider font-medium">
-                    Message
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs text-gray-500 uppercase tracking-wider font-medium">
-                    Date
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {submissions.map((s) => (
-                  <tr key={s.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3">
-                      <p className="font-medium text-gray-900">{s.name}</p>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="space-y-0.5">
-                        {s.email && (
-                          <p className="text-gray-600 text-xs">{s.email}</p>
-                        )}
-                        {s.phone && (
-                          <p className="text-gray-600 text-xs">{s.phone}</p>
-                        )}
-                        {!s.email && !s.phone && (
-                          <p className="text-gray-400 text-xs">—</p>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="space-y-0.5">
-                        {s.eventType && (
-                          <p className="text-gray-900 text-xs font-medium">
-                            {s.eventType}
-                          </p>
-                        )}
-                        {s.eventDate && (
-                          <p className="text-gray-500 text-xs">
-                            {s.eventDate}
-                          </p>
-                        )}
-                        {!s.eventType && !s.eventDate && (
-                          <p className="text-gray-400 text-xs">—</p>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <p className="text-gray-600 text-xs max-w-xs line-clamp-2">
-                        {s.message || "—"}
-                      </p>
-                    </td>
-                    <td className="px-4 py-3">
-                      <p className="text-gray-400 text-xs whitespace-nowrap">
-                        {formatDate(s.createdAt)}
-                      </p>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div className="space-y-3">
+        {submissions.map((s) => (
+          <div key={s.id} className="bg-white rounded-xl border border-gray-200 p-4">
+            <div className="flex items-center justify-between mb-2">
+              <p className="font-semibold text-gray-900">{s.name}</p>
+              <span className="text-xs text-gray-500">{new Date(s.createdAt).toLocaleDateString()}</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-2">
+              {s.email && <p>Email: {s.email}</p>}
+              {s.phone && <p>Phone: {s.phone}</p>}
+              {s.eventType && <p>Event: {s.eventType}</p>}
+              {s.eventDate && <p>Date: {s.eventDate}</p>}
+            </div>
+            {s.message && <p className="text-gray-500 text-sm mt-1">{s.message}</p>}
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }

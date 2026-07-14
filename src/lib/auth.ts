@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
 const SESSION_COOKIE = "admin_session";
 
@@ -27,4 +28,12 @@ export async function clearSession() {
 export async function requireAuth() {
   const session = await getSession();
   if (!session) redirect("/admin/login");
+}
+
+export async function requireApiAuth() {
+  const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  return null;
 }

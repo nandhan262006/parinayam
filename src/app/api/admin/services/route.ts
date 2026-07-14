@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { requireAuth } from "@/lib/auth";
+import { requireApiAuth } from "@/lib/auth";
 
 const model = db.service;
 
@@ -10,7 +10,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  await requireAuth();
+  const authError = await requireApiAuth();
+  if (authError) return authError;
   const data = await req.json();
   const item = await model.create({ data });
   return NextResponse.json(item, { status: 201 });
