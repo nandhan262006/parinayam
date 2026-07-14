@@ -1,0 +1,58 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("TURSO_DATABASE_URL")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Gallery {
+  id        String   @id @default(cuid())
+  title     String
+  category  String
+  imageUrl  String
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  text      String
+  rating    Int      @default(5)
+  date      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  message   String?
+  eventType String?
+  eventDate String?
+  createdAt DateTime @default(now())
+}
