@@ -11,11 +11,13 @@ interface ImageItem {
   height: number;
 }
 
-export default function GalleryClient({ images }: { images: ImageItem[] }) {
+export default function GalleryClient({ images, categories: filterCategories }: { images: ImageItem[]; categories?: string[] }) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const categories = ["All", ...new Set(images.map((i) => i.category))];
+  const categories = filterCategories && filterCategories.length > 0
+    ? ["All", ...filterCategories]
+    : ["All", ...new Set(images.map((i) => i.category))];
   const filtered = activeCategory === "All" ? images : images.filter((i) => i.category === activeCategory);
 
   const open = (index: number) => setLightboxIndex(index);

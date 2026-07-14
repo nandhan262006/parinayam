@@ -52,7 +52,7 @@ export default async function Home() {
               closes: "18:00",
             },
             sameAs: [
-              "https://www.instagram.com/parinayamphoto/",
+              "https://www.instagram.com/parinayamphoto?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
               "https://maps.app.goo.gl/tpCAkGsJYLv8acEN8",
             ],
             aggregateRating: {
@@ -103,7 +103,7 @@ export default async function Home() {
             <div className="relative">
               <div className="relative overflow-hidden rounded">
                 <Image
-                  src="/hero1.png"
+                  src={settings.aboutImage || "/hero1.png"}
                   alt="Photographer Hareesh"
                   width={1254}
                   height={1254}
@@ -121,31 +121,44 @@ export default async function Home() {
                 Meet Your Photographer
               </p>
               <h2 className="font-[family-name:var(--font-serif)] text-[40px] leading-[48px] font-semibold text-primary mb-6">
-                Crafting visual legacies through the lens of Hareesh.
+                {settings.aboutSubheading || "Crafting visual legacies through the lens of Hareesh."}
               </h2>
               <div className="flex gap-6 mb-6">
                 <div className="text-center">
-                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">10+</div>
-                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">Years</div>
+                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">{settings.aboutStat1Value || "10+"}</div>
+                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">{settings.aboutStat1Label || "Years"}</div>
                 </div>
                 <div className="w-px bg-border/50" />
                 <div className="text-center">
-                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">430+</div>
-                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">Couples</div>
+                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">{settings.aboutStat2Value || "430+"}</div>
+                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">{settings.aboutStat2Label || "Couples"}</div>
                 </div>
                 <div className="w-px bg-border/50" />
                 <div className="text-center">
-                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">4.9</div>
-                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">Rating</div>
+                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">{settings.aboutStat3Value || "2000+"}</div>
+                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">{settings.aboutStat3Label || "Clients"}</div>
+                </div>
+                <div className="w-px bg-border/50" />
+                <div className="text-center">
+                  <div className="font-[family-name:var(--font-serif)] text-3xl text-gold">{settings.aboutStat4Value || "4.9"}</div>
+                  <div className="text-xs text-muted mt-1 uppercase tracking-widest">{settings.aboutStat4Label || "Rating"}</div>
                 </div>
               </div>
               <div className="space-y-4 text-muted leading-relaxed">
-                <p>
-                  At Parinayam Photography, we believe every wedding is a unique symphony of emotions. Led by Hareesh, our team brings over a decade of expertise in capturing the authentic, unscripted moments that define your celebration.
-                </p>
-                <p>
-                  Based in Ongole, we specialize in luxury wedding documentation that blends traditional reverence with contemporary editorial finesse. Our approach is unobtrusive yet intentional — ensuring that every fleeting glance and heartfelt laugh is preserved forever.
-                </p>
+                {(settings.aboutBody || "").split("\n").filter(Boolean).length > 0 ? (
+                  (settings.aboutBody || "").split("\n").filter(Boolean).map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))
+                ) : (
+                  <>
+                    <p>
+                      At Parinayam Photography, we believe every wedding is a unique symphony of emotions. Led by Hareesh, our team brings over a decade of expertise in capturing the authentic, unscripted moments that define your celebration.
+                    </p>
+                    <p>
+                      Based in Ongole, we specialize in luxury wedding documentation that blends traditional reverence with contemporary editorial finesse. Our approach is unobtrusive yet intentional — ensuring that every fleeting glance and heartfelt laugh is preserved forever.
+                    </p>
+                  </>
+                )}
               </div>
               <div className="flex items-center gap-4 mt-8">
                 <Link href="/about" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-primary hover:text-gold transition-colors">
@@ -186,7 +199,7 @@ export default async function Home() {
       </section>
 
       {/* Services */}
-      <section className="section-gap bg-surface-dim">
+      <section id="services" className="section-gap bg-surface-dim">
         <div className="container-max">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.15em] font-semibold text-gold mb-2">What We Offer</p>

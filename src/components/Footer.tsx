@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer({ address, instagram }: { address?: string; instagram?: string }) {
   const addr = address || "Shop no 208, Vijaya Complex, Ongole, AP";
-  const ig = instagram || "https://www.instagram.com/parinayamphoto/";
+  const ig = instagram || "https://www.instagram.com/parinayamphoto?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
   return (
     <footer className="bg-primary text-surface/60">
       <div className="container-max py-16">
@@ -52,7 +52,7 @@ export default function Footer({ address, instagram }: { address?: string; insta
             <ul className="space-y-2.5">
               {["Weddings", "Engagements", "Cinematography", "Fine Art Portraits"].map((item) => (
                 <li key={item}>
-                  <Link href="/services" className="text-sm hover:text-gold transition-colors">
+                  <Link href="/#services" className="text-sm hover:text-gold transition-colors">
                     {item}
                   </Link>
                 </li>
@@ -66,7 +66,7 @@ export default function Footer({ address, instagram }: { address?: string; insta
             </h4>
             <ul className="space-y-2.5">
               {[
-                { label: "Instagram", href: "https://www.instagram.com/parinayamphoto/" },
+                { label: "Instagram", href: "https://www.instagram.com/parinayamphoto?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
                 { label: "Facebook", href: "#" },
                 { label: "Vimeo", href: "#" },
                 { label: "Admin", href: "/admin" },

@@ -16,7 +16,7 @@ async function main() {
   const services = [
     { title: "Bridal Photography", description: "Elegant bridal portraits that capture every detail of your special day, from the intricate jewellery to the joyous tears.", imageUrl: "/gallery1.png", order: 0 },
     { title: "Engagement Photography", description: "Beautiful engagement shoots that tell your love story against stunning backdrops.", imageUrl: "/gallery3.png", order: 1 },
-    { title: "Candid Photography", description: "Natural, unposed moments that reflect genuine emotions — the laughter, the tears, the pure joy.", imageUrl: "/gallery2.png", order: 2 },
+    { title: "Candid Photography", description: "Natural, unposed moments that reflect genuine emotions — the laughter, the tears, the pure joy.", imageUrl: "/candid.png", order: 2 },
     { title: "Wedding Cinematography", description: "Cinematic wedding films that bring your most cherished memories to life with stunning visuals.", imageUrl: "/gallery5.png", order: 3 },
     { title: "Pre-Wedding Shoot", description: "Creative pre-wedding sessions at handpicked locations that capture your unique bond.", imageUrl: "/gallery7.png", order: 4 },
     { title: "Event Photography", description: "Professional coverage for engagements, receptions, and all your special celebrations.", imageUrl: "/gallery4.png", order: 5 },

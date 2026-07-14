@@ -7,8 +7,8 @@ import { useState } from "react";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/#services", label: "Services" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
   { href: "/admin", label: "Admin" },
@@ -31,6 +31,7 @@ export default function Navbar({ whatsapp = "918978936785" }: { whatsapp?: strin
             width={108}
             height={72}
             className="h-full w-auto brightness-125"
+            style={{ width: 'auto', height: 'auto' }}
             priority
           />
         </Link>

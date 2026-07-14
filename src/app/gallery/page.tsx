@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import GalleryClient from "@/components/GalleryClient";
-import { getGalleryAll } from "@/lib/data";
+import { getGalleryAll, getSettings } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Gallery — Timeless Wedding Photography by Parinayam",
@@ -10,6 +10,16 @@ export const metadata: Metadata = {
 
 export default async function Gallery() {
   const items = await getGalleryAll();
+  const settings = await getSettings();
+
+  let filterCategories: string[] = [];
+  if (settings.galleryCategories) {
+    try { filterCategories = JSON.parse(settings.galleryCategories); } catch {}
+  }
+  if (filterCategories.length === 0) {
+    filterCategories = [...new Set(items.map((i) => i.category).filter(Boolean))];
+  }
+
   const images = items.map((item) => ({
     src: "src" in item ? (item as { src: string }).src : (item as { imageUrl: string }).imageUrl,
     alt: item.title,
@@ -37,7 +47,7 @@ export default async function Gallery() {
         </div>
       </section>
 
-      <GalleryClient images={images} />
+      <GalleryClient images={images} categories={filterCategories} />
 
       <section className="section-gap bg-primary text-center">
         <div className="container-max max-w-2xl">

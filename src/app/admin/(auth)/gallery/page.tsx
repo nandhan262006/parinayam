@@ -15,11 +15,48 @@ export default function GalleryPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [showNewCategory, setShowNewCategory] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [savedCategories, setSavedCategories] = useState<string[]>([]);
 
-  const categories = [...new Set(items.map((i) => i.category).filter(Boolean))];
+  const categories = savedCategories;
+
+  const loadCategories = async () => {
+    try {
+      const res = await fetch("/api/admin/settings", { credentials: "include" });
+      const data = await res.json();
+      let stored: string[] = [];
+      if (data.galleryCategories) {
+        try { stored = JSON.parse(data.galleryCategories); } catch { stored = []; }
+      }
+      setSavedCategories(stored);
+    } catch {}
+  };
+
+  const saveCategoriesToApi = async (cats: string[]) => {
+    await fetch("/api/admin/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ galleryCategories: JSON.stringify(cats) }),
+      credentials: "include",
+    });
+  };
+
+  const addCategory = (name: string) => {
+    if (!name.trim() || categories.includes(name.trim())) return;
+    const updated = [...savedCategories, name.trim()];
+    setSavedCategories(updated);
+    saveCategoriesToApi(updated);
+  };
+
+  const removeCategory = (name: string) => {
+    if (!confirm(`Delete category "${name}"? This won't delete the gallery items.`)) return;
+    const updated = savedCategories.filter((c) => c !== name);
+    setSavedCategories(updated);
+    saveCategoriesToApi(updated);
+    if (form.category === name) setForm({ ...form, category: "" });
+  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -43,7 +80,7 @@ export default function GalleryPage() {
     finally { setLoading(false); }
   }, []);
 
-  useEffect(() => { fetchItems(); }, [fetchItems]);
+  useEffect(() => { fetchItems(); loadCategories(); }, [fetchItems]);
 
   const resetForm = () => { setForm(emptyForm); setEditingId(null); };
 
@@ -94,6 +131,53 @@ export default function GalleryPage() {
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-4">{error}</div>}
 
+      {/* Category Management */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
+        <h2 className="font-semibold text-gray-900 mb-3">Manage Categories</h2>
+        <div className="flex gap-2 mb-3">
+          <input
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+            placeholder="New category name"
+            className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                if (newCategory.trim() && !categories.includes(newCategory.trim())) {
+                  addCategory(newCategory.trim());
+                  setNewCategory("");
+                }
+              }
+            }}
+          />
+          <button
+            onClick={() => {
+              if (newCategory.trim() && !categories.includes(newCategory.trim())) {
+                addCategory(newCategory.trim());
+                setNewCategory("");
+              }
+            }}
+            className="bg-[#111] text-white px-4 py-2 rounded-lg text-sm hover:bg-[#222]"
+          >
+            Add Category
+          </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {categories.length === 0 && <p className="text-sm text-gray-400">No categories yet. Add your first one above.</p>}
+          {categories.map((cat) => (
+            <span key={cat} className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full text-sm">
+              {cat}
+              <button
+                onClick={() => removeCategory(cat)}
+                className="text-gray-400 hover:text-red transition"
+              >
+                &times;
+              </button>
+            </span>
+          ))}
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 mb-6 space-y-4">
         <h2 className="font-semibold text-gray-900">{editingId ? "Edit Gallery Item" : "Add New Gallery Item"}</h2>
         <div>
@@ -137,6 +221,9 @@ export default function GalleryPage() {
                 onClick={() => {
                   if (newCategory.trim()) {
                     setForm({ ...form, category: newCategory.trim() });
+                    if (!categories.includes(newCategory.trim())) {
+                      addCategory(newCategory.trim());
+                    }
                     setShowNewCategory(false);
                     setNewCategory("");
                   }

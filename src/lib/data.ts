@@ -10,7 +10,7 @@ export const getServices = nextCache(
     return [
       { id: "1", title: "Bridal Photography", description: "Elegant bridal portraits that capture every detail of your special day, from the intricate jewellery to the joyous tears.", imageUrl: "/gallery1.png", order: 0 },
       { id: "2", title: "Engagement Photography", description: "Beautiful engagement shoots that tell your love story against stunning backdrops.", imageUrl: "/gallery3.png", order: 1 },
-      { id: "3", title: "Candid Photography", description: "Natural, unposed moments that reflect genuine emotions — the laughter, the tears, the pure joy.", imageUrl: "/gallery2.png", order: 2 },
+      { id: "3", title: "Candid Photography", description: "Natural, unposed moments that reflect genuine emotions — the laughter, the tears, the pure joy.", imageUrl: "/candid.png", order: 2 },
       { id: "4", title: "Wedding Cinematography", description: "Cinematic wedding films that bring your most cherished memories to life with stunning visuals.", imageUrl: "/gallery5.png", order: 3 },
       { id: "5", title: "Pre-Wedding Shoot", description: "Creative pre-wedding sessions at handpicked locations that capture your unique bond.", imageUrl: "/gallery7.png", order: 4 },
       { id: "6", title: "Event Photography", description: "Professional coverage for engagements, receptions, and all your special celebrations.", imageUrl: "/gallery4.png", order: 5 },
@@ -103,7 +103,7 @@ export const getSettings = nextCache(
       email: "hello@parinayam.com",
       address: "Shop no 208, Vijaya Complex, Ongole, AP",
       mapsUrl: "https://maps.app.goo.gl/tpCAkGsJYLv8acEN8",
-      instagram: "https://www.instagram.com/parinayamphoto/",
+      instagram: "https://www.instagram.com/parinayamphoto?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     };
   },
   ["settings"],
