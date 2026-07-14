@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: "grid" },
@@ -71,6 +72,7 @@ function Icon({ name }: { name: string }) {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   const isActive = (href: string) => {
     if (href === "/admin") return pathname === "/admin";
@@ -82,12 +84,10 @@ export default function Sidebar() {
     window.location.href = "/admin/login";
   };
 
-  return (
-    <aside className="w-64 bg-[#111] text-white flex flex-col min-h-screen">
+  const navContent = (
+    <>
       <div className="py-6 px-6">
-        <h1 className="font-[family-name:var(--font-serif)] text-gold text-lg">
-          Parinayam
-        </h1>
+        <h1 className="font-[family-name:var(--font-serif)] text-gold text-lg">Parinayam</h1>
         <p className="text-gray-500 text-xs mt-0.5">Admin</p>
       </div>
 
@@ -96,6 +96,7 @@ export default function Sidebar() {
           <Link
             key={link.href}
             href={link.href}
+            onClick={() => setOpen(false)}
             className={`rounded-lg px-4 py-2.5 text-sm flex items-center gap-3 transition-colors ${
               isActive(link.href)
                 ? "text-gold bg-gold/10"
@@ -129,6 +130,36 @@ export default function Sidebar() {
           Logout
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile hamburger */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="fixed top-3 left-3 z-50 lg:hidden bg-[#111] text-white p-2 rounded-lg"
+        aria-label="Menu"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M3 12h18M3 6h18M3 18h18" />}
+        </svg>
+      </button>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden lg:flex w-64 bg-[#111] text-white flex-col min-h-screen">
+        {navContent}
+      </aside>
+
+      {/* Mobile overlay */}
+      {open && (
+        <>
+          <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setOpen(false)} />
+          <aside className="fixed inset-y-0 left-0 w-64 bg-[#111] text-white flex flex-col z-50 lg:hidden overflow-y-auto">
+            {navContent}
+          </aside>
+        </>
+      )}
+    </>
   );
 }
