@@ -33,7 +33,7 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             name: "Parinayam Photography",
-            image: "https://parinayam-rose.vercel.app/og-image.png",
+            image: "https://parinayam-rose.vercel.app/og-image.jpg",
             "@id": "https://parinayam-rose.vercel.app",
             url: "https://parinayam-rose.vercel.app",
             telephone: "+918978936785",

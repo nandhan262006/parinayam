@@ -46,10 +46,11 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Parinayam Photography — Timeless Celebrations",
+        type: "image/jpeg",
       },
     ],
   },
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
     title: "Parinayam Photography — Ongole's Finest Wedding Photographer",
     description:
       "Capturing timeless Telugu weddings with elegance. 10+ years, 430+ happy couples, 4.9-star rated.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
