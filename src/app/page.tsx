@@ -57,7 +57,10 @@ export default function Home() {
               opens: "09:00",
               closes: "18:00",
             },
-            sameAs: ["https://www.instagram.com/parinayamphoto/"],
+            sameAs: [
+              "https://www.instagram.com/parinayamphoto/",
+              "https://maps.app.goo.gl/tpCAkGsJYLv8acEN8",
+            ],
             aggregateRating: {
               "@type": "AggregateRating",
               ratingValue: "4.9",

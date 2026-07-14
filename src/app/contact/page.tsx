@@ -56,9 +56,9 @@ export default function Contact() {
                   <span className="text-gold text-2xl">location_on</span>
                   <div>
                     <p className="text-xs uppercase tracking-[0.05em] text-muted">Studio</p>
-                    <p className="text-sm text-primary font-medium">
+                    <a href="https://maps.app.goo.gl/tpCAkGsJYLv8acEN8" target="_blank" rel="noopener noreferrer" className="text-sm text-primary font-medium hover:text-gold transition-colors">
                       Shop no 208, Vijaya Complex, Ongole, AP
-                    </p>
+                    </a>
                   </div>
                 </div>
               </div>

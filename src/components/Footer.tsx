@@ -17,6 +17,9 @@ export default function Footer() {
             <p className="text-sm leading-relaxed">
               Capturing the soul of Indian celebrations with timeless elegance and modern sophistication.
             </p>
+            <a href="https://maps.app.goo.gl/tpCAkGsJYLv8acEN8" target="_blank" rel="noopener noreferrer" className="text-xs text-surface/50 hover:text-gold transition-colors mt-3 block">
+              Shop no 208, Vijaya Complex, Ongole, AP
+            </a>
             <div className="flex gap-4 mt-5 text-surface/70">
               <a href="https://www.instagram.com/parinayamphoto/" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">Instagram</a>
             </div>
