@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Parinayam Photography — Ongole's Finest Wedding Photographer",
     description:
-      "Award-winning wedding photography by Hareesh Mulluri. Capturing timeless Telugu celebrations with elegance across Ongole, Andhra Pradesh & worldwide.",
+      "Wedding photography by Hareesh Mulluri. Capturing timeless Telugu celebrations with elegance across Ongole, Andhra Pradesh & worldwide.",
     siteName: "Parinayam Photography",
     type: "website",
     locale: "en_IN",

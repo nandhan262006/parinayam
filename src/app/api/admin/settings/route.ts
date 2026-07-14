@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { db } from "@/lib/db";
-import { requireApiAuth } from "@/lib/auth";
 
 export async function GET() {
   const items = await db.setting.findMany();
@@ -10,8 +10,6 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const authError = await requireApiAuth();
-  if (authError) return authError;
   const data = await req.json();
   for (const [key, value] of Object.entries(data)) {
     await db.setting.upsert({
@@ -20,5 +18,6 @@ export async function POST(req: NextRequest) {
       create: { key, value: String(value) },
     });
   }
+  revalidateTag("settings", "max");
   return NextResponse.json({ ok: true });
 }

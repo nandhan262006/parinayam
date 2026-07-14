@@ -19,11 +19,25 @@ export default function ServicesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const fd = new FormData();
+    fd.append("file", file);
+    try {
+      const res = await fetch("/api/admin/upload", { method: "POST", body: fd, credentials: "include" });
+      const data = await res.json();
+      setForm((f) => ({ ...f, imageUrl: data.url }));
+    } catch { setError("Upload failed"); }
+    setUploading(false);
+  };
 
   const fetchServices = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/services", { credentials: "include" });
+      const res = await fetch("/api/admin/services");
       if (!res.ok) throw new Error("Failed");
       setServices(await res.json());
     } catch {
@@ -35,7 +49,7 @@ export default function ServicesPage() {
 
   useEffect(() => { fetchServices(); }, [fetchServices]);
 
-  const resetForm = () => { setForm(emptyForm); setEditingId(null); setShowForm(false); };
+  const resetForm = () => { setForm(emptyForm); setEditingId(null); };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +76,6 @@ export default function ServicesPage() {
   const handleEdit = (s: Service) => {
     setForm({ title: s.title, description: s.description, imageUrl: s.imageUrl });
     setEditingId(s.id);
-    setShowForm(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -75,36 +88,47 @@ export default function ServicesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Services</h1>
-        <button onClick={() => { resetForm(); setShowForm(true); }} className="bg-[#111] text-white px-4 py-2 rounded-lg text-sm hover:bg-[#222]">
-          Add Service
-        </button>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Services</h1>
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-4">{error}</div>}
 
-      {showForm && (
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 mb-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">{editingId ? "Edit" : "New"} Service</h2>
-          <div>
-            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Title</label>
-            <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
-          </div>
-          <div>
-            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Description</label>
-            <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
-          </div>
-          <div>
-            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Image URL</label>
-            <input value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" placeholder="/gallery1.png" />
-          </div>
-          <div className="flex gap-2">
-            <button type="submit" disabled={saving} className="bg-gold text-white px-6 py-2 rounded-lg text-sm hover:bg-gold/90 disabled:opacity-50">{saving ? "Saving..." : editingId ? "Update" : "Create"}</button>
-            <button type="button" onClick={resetForm} className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm hover:bg-gray-200">Cancel</button>
-          </div>
-        </form>
-      )}
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 mb-6 space-y-4">
+        <h2 className="font-semibold text-gray-900">{editingId ? "Edit Service" : "Add New Service"}</h2>
+        <div>
+          <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Title</label>
+          <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
+        </div>
+        <div>
+          <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Description</label>
+          <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
+        </div>
+        <div>
+          <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Image</label>
+          {form.imageUrl ? (
+            <div className="mb-2">
+              <img src={form.imageUrl} alt="" className="w-32 h-24 object-cover rounded-lg border" />
+            </div>
+          ) : (
+            <label className="flex items-center justify-center gap-2 mb-2 w-full h-20 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gold hover:bg-gold/5 transition text-sm text-gray-500">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 5v14M5 12h14"/></svg>
+              {uploading ? "Uploading..." : "Choose Image"}
+              <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+            </label>
+          )}
+          {form.imageUrl && (
+            <label className="flex items-center justify-center gap-2 mb-2 w-full py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gold hover:bg-gold/5 transition text-xs text-gray-400">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 5v14M5 12h14"/></svg>
+              {uploading ? "Uploading..." : "Change Image"}
+              <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+            </label>
+          )}
+          <input value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" placeholder="Or paste image URL" />
+        </div>
+        <div className="flex gap-2">
+          <button type="submit" disabled={saving} className="bg-gold text-white px-6 py-2 rounded-lg text-sm hover:bg-gold/90 disabled:opacity-50">{saving ? "Saving..." : editingId ? "Update" : "Create"}</button>
+          {editingId && <button type="button" onClick={resetForm} className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm hover:bg-gray-200">Cancel</button>}
+        </div>
+      </form>
 
       <div className="space-y-3">
         {services.length === 0 && <p className="text-gray-500 text-center py-10">No services yet.</p>}

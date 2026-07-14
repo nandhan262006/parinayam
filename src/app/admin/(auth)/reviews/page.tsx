@@ -12,12 +12,11 @@ export default function ReviewsPage() {
   const [error, setError] = useState("");
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const fetchReviews = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/reviews", { credentials: "include" });
+      const res = await fetch("/api/admin/reviews");
       setReviews(await res.json());
     } catch { setError("Failed to load"); }
     finally { setLoading(false); }
@@ -36,14 +35,14 @@ export default function ReviewsPage() {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Failed");
-      setForm(emptyForm); setEditingId(null); setShowForm(false); fetchReviews();
+      setForm(emptyForm); setEditingId(null); fetchReviews();
     } catch { setError("Save failed"); }
     finally { setSaving(false); }
   };
 
   const handleEdit = (r: Review) => {
     setForm({ name: r.name, text: r.text, rating: r.rating, date: r.date });
-    setEditingId(r.id); setShowForm(true);
+    setEditingId(r.id);
   };
 
   const handleDelete = async (id: string) => {
@@ -56,42 +55,37 @@ export default function ReviewsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Reviews</h1>
-        <button onClick={() => { setForm(emptyForm); setEditingId(null); setShowForm(true); }} className="bg-[#111] text-white px-4 py-2 rounded-lg text-sm hover:bg-[#222]">Add Review</button>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Reviews</h1>
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-4">{error}</div>}
 
-      {showForm && (
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 mb-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">{editingId ? "Edit" : "New"} Review</h2>
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 mb-6 space-y-4">
+        <h2 className="font-semibold text-gray-900">{editingId ? "Edit Review" : "Add New Review"}</h2>
+        <div>
+          <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Name</label>
+          <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
+        </div>
+        <div>
+          <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Review Text</label>
+          <textarea value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Name</label>
-            <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
+            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Rating (1-5)</label>
+            <select value={form.rating} onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold">
+              {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} Star{n>1?'s':''}</option>)}
+            </select>
           </div>
           <div>
-            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Review Text</label>
-            <textarea value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" required />
+            <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Date</label>
+            <input value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Rating (1-5)</label>
-              <select value={form.rating} onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold">
-                {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} Star{n>1?'s':''}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Date</label>
-              <input value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:border-gold" />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button type="submit" disabled={saving} className="bg-gold text-white px-6 py-2 rounded-lg text-sm">{saving ? "Saving..." : editingId ? "Update" : "Create"}</button>
-            <button type="button" onClick={() => setShowForm(false)} className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm">Cancel</button>
-          </div>
-        </form>
-      )}
+        </div>
+        <div className="flex gap-2">
+          <button type="submit" disabled={saving} className="bg-gold text-white px-6 py-2 rounded-lg text-sm">{saving ? "Saving..." : editingId ? "Update" : "Create"}</button>
+          {editingId && <button type="button" onClick={() => { setForm(emptyForm); setEditingId(null); }} className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg text-sm">Cancel</button>}
+        </div>
+      </form>
 
       <div className="space-y-3">
         {reviews.length === 0 && <p className="text-gray-500 text-center py-10">No reviews yet.</p>}

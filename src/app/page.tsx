@@ -3,18 +3,7 @@ import Link from "next/link";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import HomeGallery from "@/components/HomeGallery";
 import ServiceCards3D from "@/components/ServiceCards3D";
-
-const gallery = [
-  { src: "/gallery1.png", alt: "Gallery 1", category: "Wedding Rituals", title: "Ananya & Rohit", width: 1122, height: 1402 },
-  { src: "/gallery2.png", alt: "Gallery 2", category: "Macro Details", title: "The Vow", width: 1402, height: 1122 },
-  { src: "/gallery3.png", alt: "Gallery 3", category: "Portrait Session", title: "Heritage Love", width: 1136, height: 1385 },
-  { src: "/gallery4.png", alt: "Gallery 4", category: "Candid Moments", title: "Sangeet Night", width: 1402, height: 1122 },
-  { src: "/gallery5.png", alt: "Gallery 5", category: "Outdoor Session", title: "Golden Hour", width: 1536, height: 1024 },
-  { src: "/gallery6.png", alt: "Gallery 6", category: "Bridal Portraits", title: "Anticipation", width: 1536, height: 1024 },
-  { src: "/gallery7.png", alt: "Gallery 7", category: "Wedding", title: "Sacred Vows", width: 1023, height: 1537 },
-  { src: "/gallery8.png", alt: "Gallery 8", category: "Portrait", title: "Grace", width: 891, height: 885 },
-  { src: "/gallery9.png", alt: "Gallery 9", category: "Bridal", title: "Radiance", width: 1023, height: 1537 },
-];
+import { getGalleryFeatured, getServices, getReviews } from "@/lib/data";
 
 const process = [
   { step: "01", title: "Connect", desc: "Share your vision with us over a call. We discuss dates, venues, and the moments that matter most to you." },
@@ -23,7 +12,11 @@ const process = [
   { step: "04", title: "Deliver", desc: "Within weeks, you receive a hand-edited digital gallery and a bespoke heirloom album." },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const gallery = await getGalleryFeatured();
+  const services = await getServices();
+  const reviews = await getReviews();
+
   return (
     <>
       <script
@@ -178,7 +171,7 @@ export default function Home() {
                 A Gallery of Celebrations
               </h2>
             </div>
-            <Link href="/portfolio" className="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-primary hover:text-gold transition-colors">
+            <Link href="/gallery" className="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-[0.05em] font-semibold text-primary hover:text-gold transition-colors">
               See All Stories
             </Link>
           </div>
@@ -201,14 +194,7 @@ export default function Home() {
             </h2>
           </div>
           <ServiceCards3D
-            cards={[
-              { title: "Bridal Photography", description: "Elegant bridal portraits that capture every detail of your special day, from the intricate jewellery to the joyous tears.", img: "/gallery1.png" },
-              { title: "Engagement Photography", description: "Beautiful engagement shoots that tell your love story against stunning backdrops.", img: "/gallery3.png" },
-              { title: "Candid Photography", description: "Natural, unposed moments that reflect genuine emotions — the laughter, the tears, the pure joy.", img: "/gallery2.png" },
-              { title: "Wedding Cinematography", description: "Cinematic wedding films that bring your most cherished memories to life with stunning visuals.", img: "/gallery5.png" },
-              { title: "Pre-Wedding Shoot", description: "Creative pre-wedding sessions at handpicked locations that capture your unique bond.", img: "/gallery7.png" },
-              { title: "Event Photography", description: "Professional coverage for engagements, receptions, and all your special celebrations.", img: "/gallery4.png" },
-            ]}
+            cards={services.map((s) => ({ title: s.title, description: s.description, img: s.imageUrl }))}
           />
         </div>
       </section>
@@ -257,13 +243,7 @@ export default function Home() {
             </div>
           </div>
           <ReviewCarousel
-            reviews={[
-              { text: "The best wedding photography team we could have asked for. Hareesh captured every emotion perfectly.", name: "Sowmya & Karthik", date: "2 months ago", rating: 5 },
-              { text: "Extremely professional and easy to work with. They made us feel so comfortable, and the results exceeded expectations.", name: "Priya & Vikram", date: "3 months ago", rating: 5 },
-              { text: "Their eye for detail is incredible. Timeless photos we will cherish for a lifetime. Highly recommended!", name: "Deepika & Sandeep", date: "1 month ago", rating: 5 },
-              { text: "Booked them for our destination wedding in Goa. They captured the beach vibes so beautifully.", name: "Ananya & Rohit", date: "5 months ago", rating: 5 },
-              { text: "From the pre-wedding shoot to the reception, every photo tells a story. Pure magic!", name: "Meera & Sravan", date: "4 months ago", rating: 5 },
-            ]}
+            reviews={reviews.map((r) => ({ text: r.text, name: r.name, date: r.date, rating: r.rating }))}
           />
         </div>
       </section>
@@ -281,8 +261,8 @@ export default function Home() {
             <a href="https://wa.me/918978936785" target="_blank" rel="noopener noreferrer" className="btn-gold-outline !text-gold !border-gold hover:!bg-gold hover:!text-primary">
               Inquire via WhatsApp
             </a>
-            <Link href="/portfolio" className="btn-outline !text-surface !border-surface/30 hover:!border-surface">
-              View Portfolio
+            <Link href="/gallery" className="btn-outline !text-surface !border-surface/30 hover:!border-surface">
+              View Gallery
             </Link>
           </div>
         </div>

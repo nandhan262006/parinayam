@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setSession } from "@/lib/auth";
+import { setSession, clearSession } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   const { password } = await req.json();
@@ -19,8 +19,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE() {
-  const { cookies } = await import("next/headers");
-  const cookieStore = await cookies();
-  cookieStore.delete("admin_session");
+  await clearSession();
   return NextResponse.json({ ok: true });
 }

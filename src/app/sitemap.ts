@@ -9,12 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: "https://parinayam-rose.vercel.app/portfolio",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
       url: "https://parinayam-rose.vercel.app/gallery",
       lastModified: new Date(),
       changeFrequency: "weekly",

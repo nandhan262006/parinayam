@@ -1,39 +1,26 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
+import { cookies } from 'next/headers'
 
-const SESSION_COOKIE = "admin_session";
+const COOKIE_NAME = 'admin_auth'
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 
-export async function setSession() {
-  const cookieStore = await cookies();
-  cookieStore.set(SESSION_COOKIE, "authenticated", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
-    path: "/",
-  });
+export async function isAuthenticated(): Promise<boolean> {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(COOKIE_NAME)
+  return token?.value === 'true'
 }
 
-export async function getSession() {
-  const cookieStore = await cookies();
-  return cookieStore.get(SESSION_COOKIE)?.value;
+export async function setSession() {
+  const cookieStore = await cookies()
+  cookieStore.set(COOKIE_NAME, 'true', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: COOKIE_MAX_AGE,
+    path: '/',
+  })
 }
 
 export async function clearSession() {
-  const cookieStore = await cookies();
-  cookieStore.delete(SESSION_COOKIE);
-}
-
-export async function requireAuth() {
-  const session = await getSession();
-  if (!session) redirect("/admin/login");
-}
-
-export async function requireApiAuth() {
-  const session = await getSession();
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-  return null;
+  const cookieStore = await cookies()
+  cookieStore.delete(COOKIE_NAME)
 }

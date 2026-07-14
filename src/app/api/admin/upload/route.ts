@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireApiAuth } from "@/lib/auth";
 import { uploadImage } from "@/lib/cloudinary";
 
 export async function POST(req: NextRequest) {
-  const authError = await requireApiAuth();
-  if (authError) return authError;
   const formData = await req.formData();
   const file = formData.get("file") as File;
 

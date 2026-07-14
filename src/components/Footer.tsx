@@ -30,10 +30,10 @@ export default function Footer() {
               Discover
             </h4>
             <ul className="space-y-2.5">
-              {["Portfolio", "Wedding Stories", "Our Process", "FAQ"].map((item) => (
+              {["Gallery", "Wedding Stories", "Our Process", "FAQ"].map((item) => (
                 <li key={item}>
                   <Link
-                    href={item === "Portfolio" ? "/portfolio" : "#"}
+                    href={item === "Gallery" ? "/gallery" : "#"}
                     className="text-sm hover:text-gold transition-colors"
                   >
                     {item}
@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between border-t border-surface/10 mt-12 pt-6 text-xs">
-          <span>&copy; 2024 Parinayam Photography. Timeless Celebration.</span>
+          <span>&copy; {new Date().getFullYear()} Parinayam Photography. Timeless Celebration.</span>
           <div className="flex gap-6 mt-3 md:mt-0">
             <Link href="#" className="hover:text-gold transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-gold transition-colors">Terms of Service</Link>
