@@ -32,6 +32,7 @@ export default function Navbar() {
               fill
               sizes="200px"
               className="brightness-125"
+              style={{ width: "auto", height: "auto" }}
               priority
             />
           </div>

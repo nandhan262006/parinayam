@@ -45,7 +45,7 @@ export default function About() {
           </div>
           <div className="relative aspect-[3/4] overflow-hidden rounded">
             <Image
-              src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&q=80"
+              src="/hero1.png"
               alt="Photographer at work"
               fill
               className="object-cover"

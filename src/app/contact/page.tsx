@@ -14,7 +14,7 @@ export default function Contact() {
       <section className="relative pt-[72px] overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&q=80"
+            src="/gallery4.png"
             alt=""
             fill
             className="object-cover opacity-25"

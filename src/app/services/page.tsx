@@ -77,7 +77,7 @@ export default function Services() {
       <section className="relative pt-[72px] overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1600&q=80"
+            src="/gallery5.png"
             alt=""
             fill
             className="object-cover opacity-30"
