@@ -25,17 +25,14 @@ export default function Navbar() {
           href="/"
           className="font-[family-name:var(--font-serif)] text-xl tracking-wide text-primary flex items-center h-full"
         >
-          <div className="relative h-full w-auto" style={{ aspectRatio: "1.5" }}>
-            <Image
-              src="/navibar.png"
-              alt="Parinayam"
-              fill
-              sizes="200px"
-              className="brightness-125"
-              style={{ width: "auto", height: "auto" }}
-              priority
-            />
-          </div>
+          <Image
+            src="/navibar.png"
+            alt="Parinayam"
+            width={108}
+            height={72}
+            className="h-full w-auto brightness-125"
+            priority
+          />
         </Link>
 
         <div className="hidden lg:flex items-center gap-8">
