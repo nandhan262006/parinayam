@@ -67,6 +67,7 @@ export default function Footer() {
                 { label: "Instagram", href: "https://www.instagram.com/parinayamphoto/" },
                 { label: "Facebook", href: "#" },
                 { label: "Vimeo", href: "#" },
+                { label: "Admin", href: "/admin" },
               ].map((item) => (
                 <li key={item.label}>
                   <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-gold transition-colors">

@@ -53,6 +53,9 @@ export default function Navbar() {
           <a href="https://wa.me/918978936785" target="_blank" rel="noopener noreferrer" className="btn-primary text-xs !py-2.5 !px-5">
             Book Now
           </a>
+          <Link href="/admin" className="text-xs text-muted hover:text-gold transition-colors ml-2">
+            Admin
+          </Link>
         </div>
 
         <button
