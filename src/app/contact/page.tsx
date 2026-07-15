@@ -71,7 +71,7 @@ export default function Contact() {
         </div>
         <div className="container-max relative py-24 text-center">
           <p className="text-xs uppercase tracking-[0.15em] font-semibold text-gold mb-4">Get In Touch</p>
-          <h1 className="font-[family-name:var(--font-serif)] text-[56px] md:text-[72px] leading-[1.1] tracking-[-0.02em] font-bold text-surface mb-6">
+          <h1 className="font-[family-name:var(--font-serif)] text-[40px] leading-[1.1] md:text-[72px] tracking-[-0.02em] font-bold text-surface mb-6">
             Let&rsquo;s Create<br />Something Beautiful
           </h1>
           <p className="text-surface/60 text-lg max-w-xl mx-auto leading-relaxed">

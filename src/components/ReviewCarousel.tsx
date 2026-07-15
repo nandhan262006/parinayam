@@ -38,13 +38,13 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
     <div className="relative overflow-hidden">
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-hidden pb-2 -mx-3 px-3"
+        className="flex gap-6 overflow-x-hidden pb-2"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {doubled.map((r, i) => (
           <div
             key={i}
-            className="shrink-0 w-[340px] bg-surface border border-border/30 rounded p-6"
+            className="shrink-0 w-[min(340px,85vw)] bg-surface border border-border/30 rounded p-6"
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">

@@ -39,7 +39,7 @@ export default async function About() {
       <div className="container-max section-gap !pb-0">
         <div className="max-w-3xl">
           <p className="text-xs uppercase tracking-[0.15em] font-semibold text-gold mb-3">About</p>
-          <h1 className="font-[family-name:var(--font-serif)] text-[64px] leading-[72px] tracking-[-0.02em] font-bold text-primary mb-6">
+          <h1 className="font-[family-name:var(--font-serif)] text-[40px] leading-[48px] md:text-[64px] md:leading-[72px] tracking-[-0.02em] font-bold text-primary mb-6">
             {heading}
           </h1>
         </div>

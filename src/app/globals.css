@@ -28,11 +28,16 @@
   --border: #d4ccbc;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-montserrat), sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 ::selection {
