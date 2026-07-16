@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "parinayamphoto.com" }],
+      "destination": "https://www.parinayamphoto.com/$1",
+      "permanent": true
+    }
+  ]
+}
