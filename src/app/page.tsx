@@ -208,7 +208,7 @@ export default async function Home() {
             </h2>
           </div>
           <ServiceCards3D
-            cards={services.map((s) => ({ title: s.title, description: s.description, img: s.imageUrl }))}
+            services={services.map((s) => ({ id: s.id, title: s.title, description: s.description, imageUrl: s.imageUrl }))}
           />
         </div>
       </section>
